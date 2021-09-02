@@ -3,7 +3,7 @@ const getInputText = async() => {
     const textFromSearchBox = document.getElementById('search');
     const inputText = textFromSearchBox.value;
     textFromSearchBox.value = '';
-    const url = ` http://openlibrary.org/search.json?q=${inputText}`;
+    const url = ` https://openlibrary.org/search.json?q=${inputText}`;
 
     const res = await fetch(url);
     const data = await res.json();
