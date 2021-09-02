@@ -1,19 +1,25 @@
 //TO GET INPUT TEXT
-const getInputText = () => {
+const getInputText = async() => {
     const textFromSearchBox = document.getElementById('search');
     const inputText = textFromSearchBox.value;
     textFromSearchBox.value = '';
     const url = ` http://openlibrary.org/search.json?q=${inputText}`;
-    fetch(url)
-    .then(res => res.json())
-    .then(data => bookUi(data.docs));
+
+    const res = await fetch(url);
+    const data = await res.json();
+    bookUi(data.docs);
+
+    // fetch(url)
+    // .then(res => res.json())
+    // .then(data => bookUi(data.docs));
 }
 
 //FUCNTION FOR CREATE BOOKS UI
-const bookUi = (data) => {
+const bookUi = async(datas) => {
+    const data = datas.slice(0, 20);
     const books = document.getElementById('books');
     books.innerHTML = `
-    <h1 class='text-center mb-5' style=" font-style: italic; color: #2d3436;">Search result total ${data.length}</h1>
+    <h1 class='text-center mb-5' style=" font-style: italic; color: #2d3436;">Search result total ${datas.length}</h1>
     `;
 //IF THE CONTENT IS ZERO
     if(data.length === 0) {
@@ -32,6 +38,7 @@ const bookUi = (data) => {
     }
 //creating ui maping the data
     data.forEach(item => {
+            
             const div = document.createElement('div');
             div.classList.add('col-md-3', 'mb-4');
             div.innerHTML = `
